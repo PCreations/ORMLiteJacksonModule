@@ -7,35 +7,34 @@ import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 
-import fr.pcreations.labs.RESTDroid.core.DaoAccess;
-import fr.pcreations.labs.RESTDroid.core.DaoFactory;
+import fr.pcreations.labs.RESTDroid.core.Persistable;
+import fr.pcreations.labs.RESTDroid.core.PersistableFactory;
 import fr.pcreations.labs.RESTDroid.core.ResourceRepresentation;
 import fr.pcreations.labs.RESTDroid.core.RestService;
-import fr.pcreations.labs.RESTDroid.exceptions.DatabaseManagerNotInitializedException;
 
-public class ORMLiteDaoFactory extends DaoFactory {
+public class ORMLitePersistableFactory extends PersistableFactory {
 
 	private OrmLiteSqliteOpenHelper mHelper;
     
-    public ORMLiteDaoFactory(OrmLiteSqliteOpenHelper helper) {
+    public ORMLitePersistableFactory(OrmLiteSqliteOpenHelper helper) {
             mHelper = helper;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <D extends DaoAccess<T>, T extends ResourceRepresentation<?>> D getDao(
+    public <P extends Persistable<T>, T extends ResourceRepresentation<?>> P getPersistable(
                     Class<T> clazz) {
     	Log.i(RestService.TAG, "getDao OF : " + clazz.getSimpleName());
-		D dao;
+		P persistable;
 		
-		if(mDaos.containsKey(clazz)) {
-			return (D) mDaos.get(clazz);
+		if(mPersistables.containsKey(clazz)) {
+			return (P) mPersistables.get(clazz);
 		}
 		
 		try {
-			dao = (D) mHelper.getDao(clazz);
-			mDaos.put(clazz, dao);
-			return dao;
+			persistable = (P) mHelper.getDao(clazz);
+			mPersistables.put(clazz, persistable);
+			return persistable;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

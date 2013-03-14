@@ -2,17 +2,10 @@ package fr.pcreations.labs.RESTDroid.modules.ORMLiteJacksonModule;
 
 
 import java.io.InputStream;
-import java.sql.SQLException;
 
-import android.util.Log;
-import fr.pcreations.labs.RESTDroid.core.DaoAccess;
-import fr.pcreations.labs.RESTDroid.core.HTTPVerb;
 import fr.pcreations.labs.RESTDroid.core.Processor;
 import fr.pcreations.labs.RESTDroid.core.RESTRequest;
-import fr.pcreations.labs.RESTDroid.core.RequestState;
 import fr.pcreations.labs.RESTDroid.core.ResourceRepresentation;
-import fr.pcreations.labs.RESTDroid.core.RestService;
-import fr.pcreations.labs.RESTDroid.exceptions.DaoFactoryNotInitializedException;
 import fr.pcreations.labs.RESTDroid.exceptions.ParsingException;
 
 public class ORMLiteJacksonProcessor extends Processor{
