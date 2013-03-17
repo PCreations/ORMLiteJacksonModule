@@ -9,6 +9,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 
 import fr.pcreations.labs.RESTDroid.core.Persistable;
 import fr.pcreations.labs.RESTDroid.core.PersistableFactory;
+import fr.pcreations.labs.RESTDroid.core.Resource;
 import fr.pcreations.labs.RESTDroid.core.ResourceRepresentation;
 import fr.pcreations.labs.RESTDroid.core.RestService;
 
@@ -22,7 +23,7 @@ public class ORMLitePersistableFactory extends PersistableFactory {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <P extends Persistable<T>, T extends ResourceRepresentation<?>> P getPersistable(
+    public <P extends Persistable<T>, T extends Resource> P getPersistable(
                     Class<T> clazz) {
     	Log.i(RestService.TAG, "getDao OF : " + clazz.getSimpleName());
 		P persistable;
