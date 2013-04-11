@@ -6,7 +6,6 @@ import java.io.InputStream;
 import fr.pcreations.labs.RESTDroid.core.Processor;
 import fr.pcreations.labs.RESTDroid.core.RESTRequest;
 import fr.pcreations.labs.RESTDroid.core.ResourceRepresentation;
-import fr.pcreations.labs.RESTDroid.exceptions.ParserFactoryNotInitializedException;
 import fr.pcreations.labs.RESTDroid.exceptions.ParsingException;
 
 public class ORMLiteJacksonProcessor extends Processor{
@@ -27,9 +26,6 @@ public class ORMLiteJacksonProcessor extends Processor{
 		try {
 			is =  parseToInputStream(r.getResourceRepresentation());
 		} catch (ParsingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserFactoryNotInitializedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
