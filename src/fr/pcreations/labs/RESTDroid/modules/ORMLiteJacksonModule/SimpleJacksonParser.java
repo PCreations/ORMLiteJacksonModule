@@ -15,11 +15,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.pcreations.labs.RESTDroid.core.Parser;
+import fr.pcreations.labs.RESTDroid.core.Resource;
 import fr.pcreations.labs.RESTDroid.core.ResourceRepresentation;
 import fr.pcreations.labs.RESTDroid.core.RestService;
 import fr.pcreations.labs.RESTDroid.exceptions.ParsingException;
 
-public class SimpleJacksonParser implements Parser<ResourceRepresentation<?>>{
+public class SimpleJacksonParser implements Parser<Resource>{
 
 	
 	public final static int DATA_OK = 0;
@@ -31,7 +32,7 @@ public class SimpleJacksonParser implements Parser<ResourceRepresentation<?>>{
 	protected String mSimpleClassName;
 	protected Class<?> mClazz;
 	
-	public <T extends ResourceRepresentation<?>> SimpleJacksonParser(Class<T> clazz)
+	public <T extends Resource> SimpleJacksonParser(Class<T> clazz)
 	{
 		super();
 		mJSONMapper = new ObjectMapper(); // can reuse, share globally
@@ -43,11 +44,12 @@ public class SimpleJacksonParser implements Parser<ResourceRepresentation<?>>{
 		Log.i(RestService.TAG, "Simple class Name JacksonParser = " + mSimpleClassName);
 	}
 	
-	public ResourceRepresentation<?> parseToObject(InputStream content) throws ParsingException{
-		ResourceRepresentation<?> JSONObjResponse = null;
+	public Resource parseToObject(InputStream content) throws ParsingException{
+		Resource JSONObjResponse = null;
 		try {
-			JSONObjResponse = (ResourceRepresentation<?>) mJSONMapper.readValue(content, mClazz);
-			setResultCode(DATA_OK);
+			JSONObjResponse = (Resource) mJSONMapper.readValue(content, mClazz);
+			if(null != JSONObjResponse)
+				setResultCode(DATA_OK);
 		} catch (JsonParseException e) {
 			setResultCode(PARSER_KO_JSON_MALFORMED);
 			e.printStackTrace();
@@ -61,11 +63,12 @@ public class SimpleJacksonParser implements Parser<ResourceRepresentation<?>>{
 
 		if(mResultCode != 0)
 			throw new ParsingException(mResultCode);
+		
 		return JSONObjResponse;
 	}
 	
 	@Override
-	public <R extends ResourceRepresentation<?>> InputStream parseToInputStream(R resource) throws ParsingException {
+	public InputStream parseToInputStream(Resource resource) throws ParsingException {
 		ByteArrayOutputStream JSONstream = new ByteArrayOutputStream();
 		try {
 			mJSONMapper.writeValue(JSONstream, resource);
@@ -101,3 +104,4 @@ public class SimpleJacksonParser implements Parser<ResourceRepresentation<?>>{
 	}
 
 }
+
